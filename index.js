@@ -51,7 +51,7 @@ exports.myhandler = async function abc(){
     }
     var a=0;
 len = listDrugs.length;
-console.log(len);
+console.log(listDrugs);
     for(var k=0; k < len ; k++){
        var drugUrlList = await client.query("SELECT * FROM drug_request where program_id = 0 and drug_name is not null and latitude is not null and longitude is not null and quantity is not null and drug_id :: int = "+listDrugs[k]);
        
@@ -94,16 +94,17 @@ try
     
    await rp(options).then(async function(response){
     var jsondata1 = response;
-    var lowestPrice =  jsondata1.prices[0].price ;
+   
+    var lowestPrice =  parseFloat(jsondata1.prices[0].price) ;
     var lowestPharmacy=jsondata1.prices[0].pharmacy.name;
     jsondata1.prices.forEach(function(value){
         if(value!= null){
-            if(lowestPrice > value.price){
-                lowestPrice =  value.price;
+            if(lowestPrice > parseFloat(value.price)){
+                lowestPrice =  parseFloat(value.price);
                 lowestPharmacy=value.pharmacy.name;
             }
-            if(value.uncPrice != undefined && value.uncPrice != null && lowestPrice > value.uncPrice){
-                lowestPrice = value.uncPrice;
+            if(value.uncPrice != undefined && value.uncPrice != null && lowestPrice > parseFloat(value.uncPrice)){
+                lowestPrice = parseFloat(value.uncPrice);
                 lowestPharmacy=value.pharmacy.name;
             }
         }
