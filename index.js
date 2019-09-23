@@ -55,7 +55,7 @@ console.log(listDrugs);
     for(var k=0; k < len ; k++){
        var drugUrlList = await client.query("SELECT * FROM drug_request where program_id = 0 and drug_name is not null and latitude is not null and longitude is not null and quantity is not null and drug_id :: int = "+listDrugs[k]);
        
-       if(drugUrlList.rows.length == 1 ){
+       if(drugUrlList.rows.length > 0 ){
           //console.log("********************"+a);
          
           DrugId = parseInt(drugUrlList.rows[0].drug_id);
